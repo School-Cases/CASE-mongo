@@ -1,0 +1,26 @@
+<h1>user dashboard <%= user.name %></h1>
+
+<a href="/createteam">create team</a>
+<a href="/teams">join team</a>
+<a href="/logout">logout</a>
+
+<br>
+<br>
+<a href="/update/<%= user.id %> ">settings</a>
+
+<h3>ur teams</h3>
+
+<% let teamAdminId; %>
+<% let userIdString = JSON.stringify(user._id) %>
+
+<% let sortedTeamsByName = teams.sort((a, b) => a.name.localeCompare(b.name)) %>
+
+<% sortedTeamsByName.forEach(team => { %>
+<% let adminIdString = JSON.stringify(team.admin) %>
+<div><%= team.name %>
+    <% if (adminIdString === userIdString) { %>
+    <i>admin</i>
+    <% } %>
+</div>
+<% }) %>
+

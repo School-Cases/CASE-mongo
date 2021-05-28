@@ -1,0 +1,14 @@
+<h2>join team: <%= user.name %> </h2>
+
+<% let sortedTeamsByName = teamList.sort((a, b) => a.name.localeCompare(b.name)) %>
+<% console.log(sortedTeamsByName[0].members); %> 
+<% sortedTeamsByName.forEach((team) => { %>
+    <% if (!team.members.includes(user._id.toString())) { %>
+        
+        <% console.log(!team.members.includes(user._id.toString())); %> 
+        <div><%= team.name %> </div>
+    <% } %> 
+    
+<% }) %> 
+
+

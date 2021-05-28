@@ -1,0 +1,17 @@
+  <h1>Hi</h1>
+  <section>
+    <% let counter = 1 %>
+    <% userList.forEach((user) => { %>
+    <div id="<%= user._id %>" class="nyhet">
+      <div>User <%= counter %></div>
+      <div><%= user.name %></div>
+      <a href="/update/<%= user._id %>"><div class="updateButton">edit</div></a>
+      <a href="/deleteuser/<%= user._id %>"><div class="removeButton">remove</div></a>
+    </div>
+    <% counter++ %>
+    <% }); %>
+  </section>
+
+
+
+

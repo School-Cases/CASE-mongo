@@ -1,0 +1,7 @@
+
+<%= user.name %> 
+<form action="/updatesaveuser/<%= user._id %>" method="post">
+    name: <input type="text" name="name" id="name" value="<%= user.name %>">
+    password: <input type="text" value="<%= user.password %>" name="password" id="password">
+    <button type="submit">save</button>
+</form>
