@@ -1,6 +1,7 @@
 // const { Db } = require('mongodb');
 const Users = require('../models/UserModel.js');
 const Team = require('../models/TeamModel.js');
+const TeamModel = require('../models/TeamModel.js');
 
 const deleteAllUsers = (req, res, next) => {
     Users.remove({}).exec();
@@ -112,6 +113,20 @@ const updateUserById = async (req, res, next) => {
     // });
 }
 
+const joinTeamById = async (req, res, next) => {
+    let team = await Team.findByIdAndUpdate(req.params.id, {
+        $push: {
+            members: await Users.findById(req.session.user._id)
+        }
+    });
+    let user = await Users.findByIdAndUpdate(req.session.user._id, {
+        $push: {
+            team: team._id
+        }
+    }); 
+    res.redirect('/dashboard/' + user._id);
+}
+
 module.exports = {
     getAllUsers,
     createOneUser,
@@ -123,5 +138,6 @@ module.exports = {
     userLogout,
     userLogin,
     loginView,
-    userDashboard
+    userDashboard,
+    joinTeamById
 }

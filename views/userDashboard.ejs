@@ -6,7 +6,7 @@
 
 <br>
 <br>
-<a href="/update/<%= user.id %> ">settings</a>
+<a href="/update/<%= user.id %> ">user settings</a>
 
 <h3>ur teams</h3>
 
@@ -17,7 +17,7 @@
 
 <% sortedTeamsByName.forEach(team => { %>
 <% let adminIdString = JSON.stringify(team.admin) %>
-<div><%= team.name %>
+<div><a href="/teamdashboard/<%= team._id %>"><%= team.name %></a>
     <% if (adminIdString === userIdString) { %>
     <i>admin</i>
     <% } %>

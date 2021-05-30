@@ -1,5 +1,6 @@
 
 const News = require('../models/NewsModel.js');
+const TeamModel = require('../models/TeamModel.js');
 
 const deleteAllTeamNews = (req, res, next) => {
     // Users.remove({}).exec();
@@ -7,46 +8,39 @@ const deleteAllTeamNews = (req, res, next) => {
 }
 
 const getAllTeamNews = async (req, res, next) => {
-    // const userList = await Users.find({}).exec();
-    // const list = await Nyhet.find({category: "VILL!!"}).exec();
 
-
-    // res.render('index', {
-    //     userList: userList
-    // });
 }
 
 const deleteNewsById = async (req, res, next) => {
-    // const id = req.params.id;
-    // await News.remove({_id: id}).exec();
-    // res.redirect('/');
+    const id = req.params.id;
+    let news = await News.findById(id).exec();
+    await TeamModel.findOne(news.teamref, (error, team) => {
+        let index = team.news.findIndex(t => t._id === id);
+        team.news.splice(index, 1);
+        team.save();
+    }) 
+    await News.deleteOne({_id: id}).exec();
+    res.redirect('/teamdashboard/' + news.teamref)
 };
 
-const createOneTeamNews = (req, res, next) => {
-    // const body = req.body;
-    // const success = require('../models/Quote.js').createOne(body);
-    // if (success) {
-    //     res.redirect('/');
-    // } else {
-    //     res.status(400).json({message: "nyhet failed create"})
-    // }
-    // let user = new Users({
-    //     name: req.body.name,
-    //     password: req.body.password,
-        // team: req.body.team
+const createOneTeamNews = async (req, res, next) => {
+    let news = new News({
+        title: req.body.title,
+        text: req.body.text,
+        important: req.body.important,
+        teamref: req.body.teamref
+    });
 
-        // name: "håkan",
-        // password: "hehehe",
-        // team: ["60ad311702646f4d1c487eab"],
-        // admin: ["60ad311702646f4d1c487eab"],
-    // });
-    // user.save((error, newuser) => {
-    //     if (error) {
-    //         console.log(error);
-    //     }
-    //     res.redirect('/');
-    // });
-    
+    await TeamModel.findByIdAndUpdate(req.body.teamref, {
+        $push: {
+            news: news
+        }
+    })
+    // res.render('teamDashboard', {
+    //     news: news,
+    // })
+    news = news.save();
+    res.redirect('/teamdashboard/' + req.body.teamref);
 }
 
 const updateNewsView = async (req, res, next) => {

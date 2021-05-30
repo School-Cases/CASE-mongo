@@ -28,7 +28,8 @@ const {
     userLogout,
     userLogin,
     loginView,
-    userDashboard
+    userDashboard,
+    joinTeamById
 } = require('../controllers/UserController.js');
 
 const {
@@ -38,7 +39,9 @@ const {
     deleteAllTeams,
     deleteTeamById,
     updateTeamById,
-    // teamDashboard
+    updateTeamView,
+    teamDashboard,
+    kickMemberById
 } = require('../controllers/TeamController.js');
 
 const {
@@ -80,11 +83,13 @@ router.get('/update/:id', updateUserView);
 
 router.post('/updatesaveuser/:id', updateUserById);
 
+router.get('/jointeam/:id', joinTeamById);
+
 // team
 
 router.get('/teams', getAllTeams);
 
-// router.get('/teamdashboard/:id', teamDashboard);
+router.get('/teamdashboard/:id', teamDashboard);
 
 router.get('/deleteallteams', deleteAllTeams);
 
@@ -94,7 +99,11 @@ router.get('/createteam', createOneTeamView);
 
 router.post('/createoneteam', createOneTeam);
 
+router.get('/updateteam/:id', updateTeamView);
+
 router.post('/updatesaveteam/:id', updateTeamById);
+
+router.get('/kickmember/:teamid/:id', kickMemberById);
 
 // news
 

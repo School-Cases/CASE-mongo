@@ -17,10 +17,10 @@ const newsSchema = new Schema({
         type: Boolean,
         default: false
     },
-    teamref: [{
+    teamref: {
         type: Types.ObjectId,
         ref: 'Team'
-    }]
+    }
 });
 
 module.exports = mongoose.model('News', newsSchema);

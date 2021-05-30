@@ -1,0 +1,11 @@
+<%= team.name %> 
+<form action="/updatesaveteam/<%= team._id %>" method="post">
+    name: <input type="text" name="name" id="name" value="<%= team.name %>">
+    <button type="submit">save</button>
+</form>
+
+<% teammembers.forEach(member => { %>
+    <div><%= member.name %> <a href="/kickmember/<%= team._id %>/<%= member._id %>">kick</a></div>
+<% }) %> 
+
+<a href="/teamdashboard/<%= team._id %>"><div>BACK</div></a>

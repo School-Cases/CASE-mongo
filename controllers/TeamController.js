@@ -3,6 +3,7 @@ const TeamModel = require('../models/TeamModel.js');
 const { userDashboard } = require('./UserController.js');
 
 const Users = require('../models/UserModel.js');
+const News = require('../models/NewsModel.js');
 
 const deleteAllTeams = (req, res, next) => {
     TeamModel.remove({}).exec();
@@ -10,32 +11,37 @@ const deleteAllTeams = (req, res, next) => {
 }
 
 const getAllTeams = async (req, res, next) => {
-    TeamModel.find().lean().exec((error, teamList) => {
-        console.log(teamList);
-        const joinableTeams = teamList.map((team) => {
-            console.log(team.members.includes(req.session.user._id.toString())); 
-        })
-        console.log(joinableTeams);
-        res.render('joinTeam', {    
+    // TeamModel.find().lean().exec((error, teamList) => {
+    //     const joinableTeams = teamList.map((team) => {
+    //         team.members.forEach(teammember => {
+    //             teammember.toString();
+    //             console.log(typeof teammember);
+    //         })
+    //         return team.members.includes(req.session.user._id); 
+    //     })
+    const teamList = await TeamModel.find({}).exec();
+        // console.log(joinableTeams, 'heeeeeh');
+        res.render('joinTeam', {
             user: req.session.user,
             teamList: teamList
         });
-    });
+    // });
     
 }
 
-// const teamDashboard = async (req, res, next) => {
-//     const team = await TeamModel.findOne({_id: req.params.id});
-//     // const list = await Nyhet.find({category: "VILL!!"}).exec();
-//     console.log(req.session.user);
-//     res.render('userDashboard', {
-//         user: user
-//     });
-// }
+const teamDashboard = async (req, res, next) => {
+    const allNews = await News.find({}).exec();
+    const team = await TeamModel.findOne({_id: req.params.id});
+    res.render('teamDashboard', {
+        team: team,
+        user: req.session.user,
+        allNews: allNews
+    });
+}
 
 const deleteTeamById = async (req, res, next) => {
     const id = req.params.id;
-    await TeamModel.remove({_id: id}).exec();
+    await TeamModel.deleteOne({_id: id}).exec();
     res.redirect('/');
 };
 
@@ -70,15 +76,34 @@ const createOneTeam = async (req, res, next) => {
 const updateTeamById = async (req, res, next) => {
     const id = req.params.id;
     let team = await TeamModel.findByIdAndUpdate(id, {
-        name: team.name,
-        members: team.members,
-        news: team.news += {
-            title: req.body.title,
-            text: req.body.text,
-            important: req.body.important
-        }
+        name: req.body.name
     });
-    res.redirect('/');
+    res.redirect('/teamdashboard/' + id);
+}
+
+const updateTeamView = async (req, res, next) => {
+    const id = req.params.id;
+    let team = await TeamModel.findById(id);
+    let teammembers = await Users.find({team: id})
+    res.render('updateTeam', {
+        team: team,
+        teammembers: teammembers
+    });
+}
+
+const kickMemberById = async (req, res, next) => {
+    const id = req.params.id;
+    await TeamModel.findById(req.params.teamid, (error, team) => {
+        let index = team.members.findIndex(m => m._id === id);
+        team.members.splice(index, 1);
+        team.save();
+    }) 
+    await Users.findById(id, (error, user) => {
+        let index = user.team.findIndex(t => t._id === req.params.teamid);
+        user.team.splice(index, 1);
+        user.save();
+    }) 
+    res.redirect('/updateteam/' + req.params.teamid)
 }
 
 module.exports = {
@@ -87,5 +112,8 @@ module.exports = {
     createOneTeam,
     deleteAllTeams,
     deleteTeamById,
-    updateTeamById
+    updateTeamById,
+    teamDashboard,
+    updateTeamView,
+    kickMemberById
 }
