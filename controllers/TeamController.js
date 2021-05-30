@@ -6,27 +6,16 @@ const Users = require('../models/UserModel.js');
 const News = require('../models/NewsModel.js');
 
 const deleteAllTeams = (req, res, next) => {
-    TeamModel.remove({}).exec();
+    TeamModel.deleteMany({}).exec();
     res.redirect('/');
 }
 
 const getAllTeams = async (req, res, next) => {
-    // TeamModel.find().lean().exec((error, teamList) => {
-    //     const joinableTeams = teamList.map((team) => {
-    //         team.members.forEach(teammember => {
-    //             teammember.toString();
-    //             console.log(typeof teammember);
-    //         })
-    //         return team.members.includes(req.session.user._id); 
-    //     })
-    const teamList = await TeamModel.find({}).exec();
-        // console.log(joinableTeams, 'heeeeeh');
+    const teamList = await TeamModel.find({members: {$ne: req.session.user._id}}).exec();
         res.render('joinTeam', {
             user: req.session.user,
             teamList: teamList
         });
-    // });
-    
 }
 
 const teamDashboard = async (req, res, next) => {

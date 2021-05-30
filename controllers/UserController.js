@@ -19,11 +19,11 @@ const getAllUsers = async (req, res, next) => {
 }
 
 const userDashboard = async (req, res, next) => {
-    const user = await Users.findOne({_id: req.params.id});
+    // const user = await Users.findOne({_id: req.params.id});
     const teams = await Team.find({members: req.params.id});
     // const list = await Nyhet.find({category: "VILL!!"}).exec();
     res.render('userDashboard', {
-        user: user,
+        user: req.session.user,
         teams: teams
     });
 }

@@ -24,10 +24,16 @@ const deleteNewsById = async (req, res, next) => {
 };
 
 const createOneTeamNews = async (req, res, next) => {
+    let importantBoolean;
+    if (req.body.important == "on") {
+        importantBoolean = true;
+    } else {
+        importantBoolean = false;
+    }
     let news = new News({
         title: req.body.title,
         text: req.body.text,
-        important: req.body.important,
+        important: importantBoolean,
         teamref: req.body.teamref
     });
 

@@ -14,8 +14,7 @@ const newsSchema = new Schema({
         type: String
     },
     important: {
-        type: Boolean,
-        default: false
+        type: String,
     },
     teamref: {
         type: Types.ObjectId,
