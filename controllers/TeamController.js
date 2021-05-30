@@ -73,7 +73,7 @@ const updateTeamById = async (req, res, next) => {
 const updateTeamView = async (req, res, next) => {
     const id = req.params.id;
     let team = await TeamModel.findById(id);
-    let teammembers = await Users.find({team: id})
+    let teammembers = await Users.find({team: id}).exec();
     res.render('updateTeam', {
         team: team,
         teammembers: teammembers

@@ -24,6 +24,7 @@ const routes = require('./routes/routes.js');
 const dotenv = require('dotenv');
 const path = require('path');
 const session = require('express-session');
+const bcrypt = require('bcryptjs');
 dotenv.config();
 
 const expressLayouts = require('express-ejs-layouts');

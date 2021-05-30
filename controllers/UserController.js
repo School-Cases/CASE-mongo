@@ -3,6 +3,8 @@ const Users = require('../models/UserModel.js');
 const Team = require('../models/TeamModel.js');
 const TeamModel = require('../models/TeamModel.js');
 
+const bcrypt = require('bcryptjs');
+
 const deleteAllUsers = (req, res, next) => {
     Users.remove({}).exec();
     res.redirect('/');
@@ -37,7 +39,22 @@ const userLogout = async (req, res, next) => {
 const userLogin = async (req, res, next) => {
     const user = await Users.findOne({name: req.body.name});
     // const list = await Nyhet.find({category: "VILL!!"}).exec();
-    if (user && req.body.password === user.password) {
+    // if (user && req.body.password === user.password) {
+    //     req.session.regenerate((error) => {
+    //         req.session.user = user;
+    //         res.redirect('/dashboard/' + user._id);
+    //     });
+    // } else if (!user) {
+    //     console.log('fail user');
+    //     res.send(`wrong username`)
+    // } else {
+    //     console.log('fail password');
+    //     res.redirect('/login');
+    // }
+
+    const correctPassword = await bcrypt.compare(req.body.password, user.password);
+
+    if (user && correctPassword) {
         req.session.regenerate((error) => {
             req.session.user = user;
             res.redirect('/dashboard/' + user._id);
@@ -68,9 +85,12 @@ const createOneUser = async (req, res, next) => {
         return;
     }
 
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
     let user = new Users({
         name: req.body.name,
-        password: req.body.password,
+        password: hashedPassword,
     });
         user.save((error, newuser) => {
             if (error) {
