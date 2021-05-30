@@ -1,8 +1,9 @@
 <h1><%= team.name %> dashboard</h1>
 <h2><%= user.name %> loggedin</h2>
 
-<a href="/updateTeam/<%= team._id %>">team settings</a>
-
+<% if (user._id == team.admin) { %>
+    <a href="/updateTeam/<%= team._id %>">team settings</a>
+<% } %>
 
 <% if (user._id == team.admin) { %>
 <form action="/createteamnews" method="post">
