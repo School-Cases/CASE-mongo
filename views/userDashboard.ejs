@@ -14,11 +14,11 @@
     <% let teamAdminId; %>
     <% let userIdString = JSON.stringify(user._id) %>
     <% let sortedTeamsByName = teams.sort((a, b) => a.name.localeCompare(b.name)) %>
-    
+
     <section class="noTeams">
         <% if (sortedTeamsByName.length === 0) { %>
         <h2>You dont have any teams...</h2>
-        <% } %> 
+        <% } %>
 
         <section class="row flex heh">
 
@@ -49,7 +49,7 @@
         </section>
 
     </section>
-    
+
     <% sortedTeamsByName.forEach(team => { %>
     <% let adminIdString = JSON.stringify(team.admin) %>
     <div><a href="/teamdashboard/<%= team._id %>"><%= team.name %></a>

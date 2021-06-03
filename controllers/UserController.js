@@ -20,7 +20,9 @@ const getAllUsers = async (req, res) => {
 
 const userDashboard = async (req, res) => {
     // const user = await Users.findOne({_id: req.params.id});
-    const teams = await Team.find({members: req.params.id});
+    const teams = await Team.find({
+        members: req.params.id
+    });
     // const list = await Nyhet.find({category: "VILL!!"}).exec();
     res.render('userDashboard', {
         user: req.session.user,
@@ -42,9 +44,15 @@ const userLogout = async (req, res) => {
 
 const userLogin = async (req, res) => {
 
-    const user = await Users.findOne({name: req.body.name});
+    const user = await Users.findOne({
+        name: req.body.name
+    });
     if (!user) {
-        req.session.message = {type: "Fail", message: "Cant find user: " + req.body.name};
+        req.session.message = {
+            msg: true,
+            type: "Fail",
+            message: "Cant find user: " + req.body.name
+        };
         return res.redirect('/');
     }
 
@@ -55,22 +63,34 @@ const userLogin = async (req, res) => {
             res.redirect('/dashboard/' + user._id);
         });
     } else {
-        req.session.message = {type: "Fail", message: "Wrong password"};
+        req.session.message = {
+            msg: true,
+            type: "Fail",
+            message: "Wrong password"
+        };
         res.redirect('/');
     }
 };
 
 const deleteUserById = async (req, res) => {
     const id = req.params.id;
-    await Users.deleteOne({_id: id}).exec();
+    await Users.deleteOne({
+        _id: id
+    }).exec();
     res.redirect('/');
 };
 
 // flashmsgs
 const createOneUser = async (req, res) => {
-    if (await Users.findOne({name: req.body.name})) {
+    if (await Users.findOne({
+            name: req.body.name
+        })) {
         let workingName = req.body.name + Math.floor(Math.random() * 100);
-        req.session.message = {type: "Fail", message: "username exists alrdy! we suggest: " + workingName};
+        req.session.message = {
+            msg: true,
+            type: "Fail",
+            message: "username exists alrdy! we suggest: " + workingName
+        };
         res.redirect('/createuser');
         return;
     }
@@ -82,32 +102,39 @@ const createOneUser = async (req, res) => {
         name: req.body.name,
         password: hashedPassword,
     });
-        user.save((error, newuser) => {
-            if (error) {
-                console.log(error);
-            }
-            req.session.regenerate((error) => {
-                req.session.user = user;
-                res.redirect('/dashboard/' + user._id);
-            });
+    user.save((error, newuser) => {
+        if (error) {
+            console.log(error);
+        }
+        req.session.regenerate((error) => {
+            req.session.user = user;
+            res.redirect('/dashboard/' + user._id);
         });
-    
+    });
 
-    
+
+
 };
 
 const loginView = async (req, res) => {
-    res.render('login', {message: req.session.message})
+    
+    res.render('login', {
+        message: req.session.message
+    })
 }
 
 const createUserView = async (req, res) => {
-    res.render('createUser', {message: req.session.message});
+    res.render('createUser', {
+        message: req.session.message
+    });
 }
 
 const updateUserView = async (req, res) => {
     const id = req.params.id;
     let user = await Users.findById(id);
-    res.render('updateUser', {user: user});
+    res.render('updateUser', {
+        user: user
+    });
 }
 
 const updateUserById = async (req, res) => {
@@ -131,7 +158,7 @@ const joinTeamById = async (req, res) => {
         $push: {
             team: team._id
         }
-    }); 
+    });
     res.redirect('/dashboard/' + user._id);
 }
 

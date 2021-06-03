@@ -10,8 +10,9 @@
     <input type="password" name="password" id="password"><br> -->
 
         <img class="w-50 mb-3" src="assets/images/my-team-logo.svg" alt="">
+        
 
-        <% if (message) { %>
+        <% if (message && message.msg === true) { %>
 
             <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
                 <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
@@ -27,7 +28,7 @@
                     <%= message.message %>
                 </div>
             </div>
-
+            <% message.msg = false; %> 
             <% } %>
 
         <div class="form-floating mb-3 inputsLoginCreate1">
