@@ -31,7 +31,12 @@ const teamDashboard = async (req, res, next) => {
 const deleteTeamById = async (req, res, next) => {
     const id = req.params.id;
     await TeamModel.deleteOne({_id: id}).exec();
-    res.redirect('/');
+    await Users.find(req.session.user._id, (error, user) => {
+        let index = user.team.findIndex(t => t._id === id);
+        user.team.splice(index, 1);
+        user.save();
+    }) 
+    res.redirect('/dashboard/' + req.session.user._id);
 };
 
 const createOneTeamView = async (req, res, next) => {

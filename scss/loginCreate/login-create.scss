@@ -1,0 +1,59 @@
+
+$the-main-red: #DF1C1C;
+$the-main-grey: #4B4B4B;
+$the-darker-grey: #2E2E2E;
+$the-even-darker-grey: #202020;
+
+.formbox {
+    background-color: white;
+
+
+    padding: 1rem;
+    width: 40rem;
+    margin: auto;
+
+
+    .inputsLoginCreate1 {}
+
+    .inputsLoginCreate2 {
+        margin: 0 0 20px 0;
+    }
+
+
+    input[type=submit] {
+        background-color: $the-darker-grey;
+        border: 0;
+        border-radius: 5px;
+        cursor: pointer;
+        color: #fff;
+        font-size: 16px;
+        // font-weight: bold;
+        line-height: 1.4;
+        padding: 10px;
+        width: 180px;
+        margin: 0 15px 0 0px;
+
+        :hover {
+            background-color: $the-even-darker-grey;
+        }
+    }
+
+    a {
+        font-weight: bold;
+    }
+}
+
+@media only screen and (max-width: 720px) {
+    .formbox {
+        width: 85%;
+        margin: auto;
+    }
+}
+
+@media only screen and (max-width: 520px) {
+    .formbox {
+        .block {
+            display: grid;
+        }
+    }
+}

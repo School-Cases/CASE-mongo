@@ -1,9 +1,16 @@
-
+<nav>
+    <a href="/createteam">create team</a>
+    <a href="/logout">logout</a>
+    <a href="/teams">join team</a>
+    <a href="/dashboard/<%= user._id %>">dashboard</a>
+</nav>
 <%= user.name %> 
 <form action="/updatesaveuser/<%= user._id %>" method="post">
     name: <input type="text" name="name" id="name" value="<%= user.name %>">
-    password: <input type="text" value="<%= user.password %>" name="password" id="password">
+    password: <input type="password" value="" name="password" id="password">
     <button type="submit">save</button>
 </form>
+
+<a href="/deleteuser/<%= user._id %>">delete account</a>
 
 <a href="/dashboard/<%= user._id %>"><div>BACK</div></a>

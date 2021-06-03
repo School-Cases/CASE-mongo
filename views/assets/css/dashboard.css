@@ -1,0 +1,71 @@
+.content {
+  width: 70%;
+  margin: auto;
+  padding: 0;
+  background-color: white;
+}
+
+.content a {
+  text-decoration: none;
+}
+
+.content header {
+  width: 100%;
+  justify-content: space-between;
+  color: white;
+  background-color: #202020;
+  height: 15%;
+  box-shadow: 0px -1px 21px #00000061;
+}
+
+.content header .yourTeams {
+  font-size: 4.45rem;
+  font-weight: 900;
+  height: fit-content;
+  margin: 0 0 0 15px;
+  align-self: flex-end;
+}
+
+.content header .navUser {
+  align-items: flex-end;
+  gap: 4px;
+  padding: 0 0 4px 25px;
+  margin-right: 10px;
+}
+
+.content header .navUser .username {
+  color: white;
+  font-size: 110%;
+  font-weight: 600;
+  margin-right: 10px;
+}
+
+.content header .navUser .navUserLogSet {
+  font-size: 80%;
+  padding-bottom: 1px;
+  font-weight: 800;
+  padding-bottom: 1px;
+}
+
+.content .noTeams {
+  text-align: center;
+}
+
+.content .noTeams h2 {
+  color: #4B4B4B;
+  margin: 1rem 0 2rem 0;
+}
+
+.content .noTeams .heh {
+  justify-content: space-evenly;
+}
+
+.content footer {
+  width: 100%;
+  color: white;
+  background-color: #202020;
+  height: fit-content;
+  box-shadow: 0px -1px 21px #00000061;
+  padding: 0.5%;
+}
+/*# sourceMappingURL=dashboard.css.map */

@@ -1,87 +1,77 @@
 // const { Db } = require('mongodb');
 const Users = require('../models/UserModel.js');
 const Team = require('../models/TeamModel.js');
-const TeamModel = require('../models/TeamModel.js');
+// const TeamModel = require('../models/TeamModel.js');
 
 const bcrypt = require('bcryptjs');
 
-const deleteAllUsers = (req, res, next) => {
-    Users.remove({}).exec();
+const deleteAllUsers = (req, res) => {
+    Users.deleteMany({}).exec();
     res.redirect('/');
 }
 
-const getAllUsers = async (req, res, next) => {
+const getAllUsers = async (req, res) => {
     const userList = await Users.find({}).exec();
-    // const list = await Nyhet.find({category: "VILL!!"}).exec();
-
 
     res.render('index', {
         userList: userList
     });
 }
 
-const userDashboard = async (req, res, next) => {
+const userDashboard = async (req, res) => {
     // const user = await Users.findOne({_id: req.params.id});
     const teams = await Team.find({members: req.params.id});
     // const list = await Nyhet.find({category: "VILL!!"}).exec();
     res.render('userDashboard', {
         user: req.session.user,
-        teams: teams
+        teams: teams,
     });
 }
 
-const userLogout = async (req, res, next) => {
+const loggedInNav = async (req, res) => {
+    res.render('navigationLoggedIn', {
+        user: req.session.user
+    })
+};
+
+const userLogout = async (req, res) => {
     req.session.destroy((error) => {
         res.redirect('/')
     })
 }
 
-const userLogin = async (req, res, next) => {
+const userLogin = async (req, res) => {
+
     const user = await Users.findOne({name: req.body.name});
-    // const list = await Nyhet.find({category: "VILL!!"}).exec();
-    // if (user && req.body.password === user.password) {
-    //     req.session.regenerate((error) => {
-    //         req.session.user = user;
-    //         res.redirect('/dashboard/' + user._id);
-    //     });
-    // } else if (!user) {
-    //     console.log('fail user');
-    //     res.send(`wrong username`)
-    // } else {
-    //     console.log('fail password');
-    //     res.redirect('/login');
-    // }
+    if (!user) {
+        req.session.message = {type: "Fail", message: "Cant find user: " + req.body.name};
+        return res.redirect('/');
+    }
 
     const correctPassword = await bcrypt.compare(req.body.password, user.password);
-
-    if (user && correctPassword) {
+    if (correctPassword) {
         req.session.regenerate((error) => {
             req.session.user = user;
             res.redirect('/dashboard/' + user._id);
         });
-    } else if (!user) {
-        console.log('fail user');
-        res.send(`wrong username`)
     } else {
-        console.log('fail password');
-        res.redirect('/login');
+        req.session.message = {type: "Fail", message: "Wrong password"};
+        res.redirect('/');
     }
 };
 
-const deleteUserById = async (req, res, next) => {
+const deleteUserById = async (req, res) => {
     const id = req.params.id;
-    await Users.remove({_id: id}).exec();
+    await Users.deleteOne({_id: id}).exec();
     res.redirect('/');
 };
 
-const createOneUser = async (req, res, next) => {
+// flashmsgs
+const createOneUser = async (req, res) => {
     if (await Users.findOne({name: req.body.name})) {
         let workingName = req.body.name + Math.floor(Math.random() * 100);
-        res.send('exists alrdy! we suggest: ' + workingName + `<br><a href="/createuser"><div>BACK</div></a>`);
-        return;
-    }
-    if (await Users.findOne({password: req.body.password})) {
-        res.send(`password alrdy exists! <br><a href="/createuser"><div>BACK</div></a>`);
+        req.session.message = {type: "Fail", message: "username exists alrdy! we suggest: " + workingName};
+        res.redirect('/createuser');
         return;
     }
 
@@ -96,44 +86,42 @@ const createOneUser = async (req, res, next) => {
             if (error) {
                 console.log(error);
             }
-            res.redirect('/');
-            // res.redirect('/dashboard/' + newuser._id);
+            req.session.regenerate((error) => {
+                req.session.user = user;
+                res.redirect('/dashboard/' + user._id);
+            });
         });
     
 
     
 };
 
-const loginView = async (req, res, next) => {
-    res.render('login', null)
+const loginView = async (req, res) => {
+    res.render('login', {message: req.session.message})
 }
 
-const createUserView = async (req, res, next) => {
-    res.render('createUser', null);
+const createUserView = async (req, res) => {
+    res.render('createUser', {message: req.session.message});
 }
 
-const updateUserView = async (req, res, next) => {
+const updateUserView = async (req, res) => {
     const id = req.params.id;
     let user = await Users.findById(id);
     res.render('updateUser', {user: user});
 }
 
-const updateUserById = async (req, res, next) => {
+const updateUserById = async (req, res) => {
     const id = req.params.id;
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
     let user = await Users.findByIdAndUpdate(id, {
         name: req.body.name,
-        password: req.body.password,
+        password: hashedPassword,
     });
     res.redirect('/dashboard/' + user._id);
-    // user.save((error, newuser) => {
-    //     if (error) {
-    //         console.log(error);
-    //     }
-    //     res.redirect('/');
-    // });
 }
 
-const joinTeamById = async (req, res, next) => {
+const joinTeamById = async (req, res) => {
     let team = await Team.findByIdAndUpdate(req.params.id, {
         $push: {
             members: await Users.findById(req.session.user._id)
@@ -159,5 +147,6 @@ module.exports = {
     userLogin,
     loginView,
     userDashboard,
-    joinTeamById
+    joinTeamById,
+    loggedInNav
 }

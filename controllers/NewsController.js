@@ -3,8 +3,8 @@ const News = require('../models/NewsModel.js');
 const TeamModel = require('../models/TeamModel.js');
 
 const deleteAllTeamNews = (req, res, next) => {
-    // Users.remove({}).exec();
-    // res.redirect('/');
+    News.remove({}).exec();
+    res.redirect('/');
 }
 
 const getAllTeamNews = async (req, res, next) => {

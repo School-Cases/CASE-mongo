@@ -1,0 +1,48 @@
+
+$the-main-red: #DF1C1C;
+$the-main-grey: #4B4B4B;
+$the-darker-grey: #2E2E2E;
+$the-even-darker-grey: #202020;
+
+.userdashboardContent {
+	
+	// margin: 0 15% 0 15%;
+	width: 70%;
+    margin: auto;
+	padding: 0;
+	// height: 100%;
+	background-color: white;
+
+	a {
+		text-decoration: none;
+	}
+
+
+	.noTeams {
+		text-align: center;
+
+		h2 {
+			color: $the-main-grey;
+			margin: 1rem 0 2rem 0;
+		}
+
+		.heh {
+			justify-content: space-evenly;
+		}
+
+		.noTeamsCards {
+
+		}
+	}
+
+	footer {
+		width: 100%;
+		// justify-content: space-between;
+		color: white;
+		background-color: $the-even-darker-grey;
+		height: fit-content;
+		box-shadow: 0px -1px 21px #00000061;
+		padding: 0.5%
+		
+	}
+}

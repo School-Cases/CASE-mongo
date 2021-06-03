@@ -1,26 +1,110 @@
-<h1>user dashboard <%= user.name %></h1>
+<section class="userdashboardContent">
+    <header class="flex">
+        <h1 class="yourTeams">TEAMS</h1>
 
-<a href="/createteam">create team</a>
-<a href="/teams">join team</a>
-<a href="/logout">logout</a>
+        <section class="flex navUser">
+            <div class="username"><a style="color: white"
+                    href="/dashboard/<%= user._id %>"><%= user.name.toUpperCase() %></a></div>
+            <div class="navUserLogSet"><a style="color: #7e7e7e;" href="/logout">LOGOUT</a></div>
+            <div style="color: #7e7e7e; padding-bottom: 1px;">|</div>
+            <div class="navUserLogSet"><a style="color: #7e7e7e;" href="/update/<%= user._id %>">SETTINGS</a></div>
+        </section>
+    </header>
 
-<br>
-<br>
-<a href="/update/<%= user.id %> ">user settings</a>
+    <% let teamAdminId; %>
+    <% let userIdString = JSON.stringify(user._id) %>
+    <% let sortedTeamsByName = teams.sort((a, b) => a.name.localeCompare(b.name)) %>
+    
+    <section class="noTeams">
+        <% if (sortedTeamsByName.length === 0) { %>
+        <h2>You dont have any teams...</h2>
+        <% } %> 
 
-<h3>ur teams</h3>
+        <section class="row flex heh">
 
-<% let teamAdminId; %>
-<% let userIdString = JSON.stringify(user._id) %>
+            <div class="card noTeamCards" style="border: none; width: 18rem;">
+                <img src="../assets/images/createteam.jpg" class="card-img-top" alt="">
+                <div class="card-body">
+                    <h4 class="card-title">Create a new team!</h4>
+                    <p class="card-text">
+                        Make your own teampage dat all ur teammates can join! You will automatically becomce the
+                        teampage's admin, giving u the option to post or delete news and kick teammembers. Welcome!
+                    </p>
+                    <a href="/createteam" class="btn-lg btn-primary">CREATE TEAM</a>
+                </div>
+            </div>
 
-<% let sortedTeamsByName = teams.sort((a, b) => a.name.localeCompare(b.name)) %>
+            <div class="card noTeamCards" style="border: none; width: 18rem;">
+                <img src="../assets/images/createteam.jpg" class="card-img-top" alt="">
+                <div class="card-body">
+                    <h4 class="card-title">Join a team!</h4>
+                    <p class="card-text">
+                        Your team cant wait to see you join its page! Here you can see all the superimportant teamnews
+                        you cant afford to miss. Follow the link below to see all the joinable teams!
+                    </p>
+                    <a href="/teams" class="btn-lg btn-primary">JOIN TEAM</a>
+                </div>
+            </div>
 
-<% sortedTeamsByName.forEach(team => { %>
-<% let adminIdString = JSON.stringify(team.admin) %>
-<div><a href="/teamdashboard/<%= team._id %>"><%= team.name %></a>
-    <% if (adminIdString === userIdString) { %>
-    <i>admin</i>
-    <% } %>
-</div>
-<% }) %>
+        </section>
 
+    </section>
+    
+    <% sortedTeamsByName.forEach(team => { %>
+    <% let adminIdString = JSON.stringify(team.admin) %>
+    <div><a href="/teamdashboard/<%= team._id %>"><%= team.name %></a>
+        <% if (adminIdString === userIdString) { %>
+        <i>admin</i>
+        <% } %>
+    </div>
+    <% }) %>
+
+    <!-- <footer>
+        © Olof Aksberg :P
+    </footer> -->
+</section>
+
+
+
+
+
+<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Dropdown
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav> -->

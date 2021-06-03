@@ -51,7 +51,7 @@ app.use(express.json());
 app.use(express.urlencoded({
     extended: true
 }));
-app.use(express.static('views'));
+app.use(express.static('views/'));
 
 app.use(session({secret: 'keyboard cat', resave: false,saveUninitialized: true,cookie: { secure: false }}));
 

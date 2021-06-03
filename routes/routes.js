@@ -29,7 +29,8 @@ const {
     userLogin,
     loginView,
     userDashboard,
-    joinTeamById
+    joinTeamById,
+    loggedInNav
 } = require('../controllers/UserController.js');
 
 const {
@@ -66,8 +67,6 @@ router.get('/users', getAllUsers);
 router.post('/login', userLogin);
 
 router.get('/logout', userLogout);
-
-// router.get('/login', loginView);
 
 router.get('/dashboard/:id', userDashboard);
 
