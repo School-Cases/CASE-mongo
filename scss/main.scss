@@ -84,6 +84,10 @@ sans-serif;
 	display: none;
 }
 
+.rotate {
+	transform: rotate(180deg);
+}
+
 * {
 	// border: 1px solid black;
 	font-family: $lato;

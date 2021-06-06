@@ -48,17 +48,19 @@
                 </div>
                 <div class="center mb-3">
                     <input type="hidden" name="teamref" value="<%= team._id %>">
-                    <div class="center">TITLE:</div>
+                    <div class="center title">TITLE:</div>
                     <input type="text" name="title" id="title">
                 </div>
                 <div class="center">
-                    <textarea class="center" name="text" placeholder="Sån text under rubrik" id="text" cols="40" rows="10"></textarea>
+                    <textarea class="center" name="text" placeholder="Sån text under rubrik" id="text" cols="40"
+                        rows="10"></textarea>
                 </div>
                 <div class="center">
                     IMPORTANT:<input style="margin-left:4px;" type="checkbox" name="important" id="important">
                 </div>
                 <div class="center mt-3 mb-2">
-                    <input class="btn btn-outline-success addNewsButton" type="submit" id="createNewsSubmit" value="ADD">
+                    <input class="btn btn-outline-success addNewsButton" type="submit" id="createNewsSubmit"
+                        value="ADD">
                 </div>
             </form>
             <% } %>
@@ -101,19 +103,47 @@
         </section>
 
 
-        <section class="col-3 teamSchema">
-            <h4 class="center">SCHEMA</h4>
-            <hr>
+        <section class="col-3">
 
-            <div>
-                <i>14/7-2021</i> 13.30
-                <div>Match mot ett annat lag</div>
+            <div class="allMembersSec mb-2">
+                <div class="flex center membersButton">
+                    <div class="membersTitle">
+                        MEMBERS
+                    </div>
+                    <div id="membersArrow"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                            <path
+                                d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                        </svg></div>
+                </div>
+                <div class="members hidden">
+                    <% let sortedTeamMembers = teammembers.sort((a, b) => a.name.localeCompare(b.name)) %>
+
+                    <% sortedTeamMembers.forEach(member => { %>
+
+                    <% if (member._id.toString() != team.admin.toString()) { %>
+                    <div class="memberDiv center">
+                        <i><%= member.name %></i>
+                    </div>
+                    <% } %>
+                    <% }) %>
+                </div>
             </div>
-            <hr>
-            <div>
-                <i>14/7-2021</i> 13.30
-                <div>Match mot ett annat lag</div>
-            </div>
+
+            <section class="teamSchema">
+                <h4 class="center">SCHEMA</h4>
+                <hr>
+
+                <div>
+                    <i>14/7-2021</i> 13.30
+                    <div>Match mot ett annat lag</div>
+                </div>
+                <hr>
+                <div>
+                    <i>14/7-2021</i> 13.30
+                    <div>Match mot ett annat lag</div>
+                </div>
+            </section>
 
         </section>
 
@@ -145,4 +175,17 @@
             addButton.classList.remove("hidden");
         })
     })
+
+    let membersSwitch = false;
+    document.querySelector(".membersButton").addEventListener("click", (e) => {
+        if (membersSwitch === false) {
+            document.querySelector(".members").classList.remove("hidden");
+            document.getElementById("membersArrow").classList.add("rotate");
+            membersSwitch = true;
+        } else {
+            document.querySelector(".members").classList.add("hidden");
+            document.getElementById("membersArrow").classList.remove("rotate");
+            membersSwitch = false;
+        }
+});
 </script>

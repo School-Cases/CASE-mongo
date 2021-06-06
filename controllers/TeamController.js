@@ -29,10 +29,14 @@ const teamDashboard = async (req, res) => {
     const team = await TeamModel.findOne({
         _id: req.params.id
     });
+    let teammembers = await Users.find({
+        team: team._id
+    }).exec();
     res.render('teamDashboard', {
         team: team,
         user: req.session.user,
-        allNews: allNews
+        allNews: allNews,
+        teammembers: teammembers
     });
 }
 

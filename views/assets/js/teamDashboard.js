@@ -10,3 +10,9 @@
 //         addButton.classList.remove("hidden");
 //     })
 // })
+
+document.querySelector(".membersButton").addEventListener("click", (e) => {
+    document.querySelector(".members").classList.remove("hidden");
+
+    document.querySelector(".membersArrow").style.transform = "rotate('90deg');"
+});
