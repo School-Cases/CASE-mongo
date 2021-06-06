@@ -1,0 +1,56 @@
+$the-main-red: #DF1C1C;
+$the-dark-red: #692222;
+$the-main-grey: #7e7e7e;
+$the-dark-grey: #474747;
+$the-darker-grey: #2E2E2E;
+$the-even-darker-grey: #202020;
+
+.joinTeamContent {
+	width: 70%;
+	height: 100%;
+	margin: auto;
+	padding: 0;
+	background-color: white;
+	color: $the-dark-grey;
+
+	.back {
+		margin: 1rem;
+	}
+
+	.joinTitle {
+		font-weight: 900;
+		color: $the-main-grey;
+	}
+
+	.teamSection {
+		background-color: white;
+		border-radius: 0.8rem;
+		padding: 0.1rem;
+		color: white;
+		width: 90%;
+		flex-wrap: wrap;
+		justify-content: center;
+
+		.teamDiv {
+			width: 26%;
+			background-color: $the-darker-grey;
+			margin: 1rem;
+			color: white;
+			padding: 0.3rem 0.7rem;
+			border-radius: 8px;
+			text-align: center;
+
+			.teamName {
+				font-size: 140%;
+			}
+
+			a {
+				font-weight: 800;
+
+				// &:hover {
+				// 	transform: scale(1.1);
+				// }
+			}
+		}
+	}
+}

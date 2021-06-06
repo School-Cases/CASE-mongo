@@ -1,6 +1,12 @@
 <section class="formbox mt-5">
     <a href="/">
-        <-</a> <form action="/createoneuser" method="POST">
+        <svg xmlns="http://www.w3.org/2000/svg" width="4%" height="4%" fill="" class="bi bi-arrow-left back"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+        </svg>
+    </a>
+        <form action="/createoneuser" method="POST">
 
             <!-- <label for="name">Name:</label>
     <input type="text" name="name" id="name"><br>
@@ -8,9 +14,7 @@
     <label for="text">Password:</label>
     <input type="password" name="password" id="password"><br> -->
 
-            <h2 class="center">LAGIS</h2>
-            <h6 class="center mb-4">- wow vilken cool grej</h6>
-
+    <img class="w-50 mb-3" src="assets/images/my-team-logo.svg" alt="">
             <% if (message && message.msg === true) { %>
 
             <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">

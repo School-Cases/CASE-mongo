@@ -2,16 +2,16 @@
 const News = require('../models/NewsModel.js');
 const TeamModel = require('../models/TeamModel.js');
 
-const deleteAllTeamNews = (req, res, next) => {
+const deleteAllTeamNews = (req, res) => {
     News.remove({}).exec();
     res.redirect('/');
 }
 
-const getAllTeamNews = async (req, res, next) => {
+const getAllTeamNews = async (req, res) => {
 
 }
 
-const deleteNewsById = async (req, res, next) => {
+const deleteNewsById = async (req, res) => {
     const id = req.params.id;
     let news = await News.findById(id).exec();
     await TeamModel.findOne(news.teamref, (error, team) => {
@@ -23,7 +23,7 @@ const deleteNewsById = async (req, res, next) => {
     res.redirect('/teamdashboard/' + news.teamref)
 };
 
-const createOneTeamNews = async (req, res, next) => {
+const createOneTeamNews = async (req, res) => {
     let importantBoolean;
     if (req.body.important == "on") {
         importantBoolean = true;
@@ -49,13 +49,13 @@ const createOneTeamNews = async (req, res, next) => {
     res.redirect('/teamdashboard/' + req.body.teamref);
 }
 
-const updateNewsView = async (req, res, next) => {
+const updateNewsView = async (req, res) => {
     // const id = req.params.id;
     // let user = await Users.findById(id);
     // res.render('updateUser', {user: user});
 }
 
-const updateNewsById = async (req, res, next) => {
+const updateNewsById = async (req, res) => {
     // const id = req.params.id;
     // let user = await Users.findByIdAndUpdate(id, {
     //     name: req.body.name,

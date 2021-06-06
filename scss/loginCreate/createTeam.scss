@@ -1,0 +1,43 @@
+$the-main-red: #DF1C1C;
+$the-dark-red: #692222;
+$the-main-grey: #7e7e7e;
+$the-dark-grey: #474747;
+$the-darker-grey: #2E2E2E;
+$the-even-darker-grey: #202020;
+
+.createTeamContent {
+	width: 70%;
+	height: 100%;
+	margin: auto;
+	padding: 0;
+	background-color: white;
+	color: $the-dark-grey;
+
+	.back {
+        margin: 1rem;
+    }
+
+	form {
+        background-color: $the-darker-grey;
+        border-radius: 0.8rem;
+        padding: 2rem;
+		color: white;
+
+		h2 {
+			font-weight: 700;
+		}
+
+        input {
+            border-radius: 100px;
+            padding: 0 7px;
+            outline: 0;
+            border: none;
+        }
+
+		button {
+			color: white;
+            border-color: white;
+            border-width: 150%;
+		}
+	}
+}

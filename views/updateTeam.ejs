@@ -1,16 +1,72 @@
-<%= team.name %> 
+<section class="updateTeamContent">
+    <header class="flex">
+        <h1 class="yourTeams"><%= team.name.toUpperCase() %></h1>
+
+        <section class="flex navUser">
+            <div class="username"><a style="color: white"
+                    href="/dashboard/<%= user._id %>"><%= user.name.toUpperCase() %></a></div>
+            <div class="navUserLogSet"><a style="color: #7e7e7e;" href="/logout">LOGOUT</a></div>
+            <div style="color: #7e7e7e; padding-bottom: 1px;">|</div>
+            <div class="navUserLogSet">
+                <% if (user._id == team.admin) { %>
+                <a style="color: #7e7e7e;" href="/updateteam/<%= team._id %>">TEAMSETTINGS</a>
+                <% } else { %>
+                <a style="color: #7e7e7e;" href="/update/<%= user._id %>">SETTINGS</a>
+                <% } %>
+            </div>
+        </section>
+    </header>
+
+    <a href="/teamdashboard/<%= team._id %>">
+        <svg xmlns="http://www.w3.org/2000/svg" width="6%" height="6%" fill="" class="bi bi-arrow-left back"
+                viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+            </svg>
+    </a>
+
+    <section class="updateTeamSec mt-1">
+
+        <form action="/updatesaveteam/<%= team._id %>" method="post">
+            <div class="center mt-3">
+                NAME: <input type="text" name="name" id="name" value="<%= team.name %>">
+            </div>
+            <div class="center mt-2">
+                <button class="btn btn-outline-success" type="submit">UPDATE NAME</button>
+            </div>
+        </form>
+
+        <h2 class="center mt-4">MEMBERS:</h2>
+        <section class="teamMembersSec flex center">
+            <% let sortedTeamMembers = teammembers.sort((a, b) => a.name.localeCompare(b.name)) %>
+
+            <% sortedTeamMembers.forEach(member => { %>
+    
+                <% if (member._id.toString() != team.admin.toString()) { %>
+                <div class="memberDiv">
+                    <div class="center"><%= member.name %></div>
+                    <a class="btn btn-outline-primary kick" href="/kickmember/<%= team._id %>/<%= member._id %>">KICK</a>
+                </div>
+                <% } %>
+                <% }) %>
+        </section>
+        
+        <div class="center mt-4 mb-3 deleteTeamDiv">
+            <a class="btn btn-outline-primary deleteTeam" href="/deleteteam/<%= team._id %>">DELETE TEAM</a>
+        </div>
+        
+
+    </section>
+
+
+</section>
+
 <form action="/updatesaveteam/<%= team._id %>" method="post">
     name: <input type="text" name="name" id="name" value="<%= team.name %>">
     <button type="submit">save</button>
 </form>
 
-<% teammembers.forEach(member => { %>
-    
-    <% if (member._id.toString() != team.admin.toString()) { %> 
-        <div><%= member.name %> <a href="/kickmember/<%= team._id %>/<%= member._id %>">kick</a></div> 
-    <% } %> 
-<% }) %> 
 
-<a href="/deleteteam/<%= team._id %>">delete team</a>
 
-<a href="/teamdashboard/<%= team._id %>"><div>BACK</div></a>
+
+

@@ -1,0 +1,82 @@
+$the-main-red: #DF1C1C;
+$the-dark-red: #692222;
+$the-main-grey: #7e7e7e;
+$the-dark-grey: #474747;
+$the-darker-grey: #2E2E2E;
+$the-even-darker-grey: #202020;
+
+
+.updateTeamContent {
+	width: 70%;
+	height: 100%;
+	margin: auto;
+	padding: 0;
+	background-color: white;
+	color: $the-dark-grey;
+
+	.back {
+		margin: 1rem;
+	}
+
+	.updateTeamSec {
+		background-color: $the-darker-grey;
+		border-radius: 0.8rem;
+		color: white;
+		padding: 0.4rem 0.7rem;
+		width: 80%;
+		margin: auto;
+
+		input {
+			border-radius: 100px;
+			padding: 0 7px;
+			outline: 0;
+			border: none;
+		}
+
+		button {
+			border: 1px solid white;
+			border-radius: 1000px;
+			padding: 0.1rem 1rem;
+			color: white;
+			font-weight: 600;
+			font-size: 100%;
+			background-color: $the-dark-grey;
+
+			&:hover {
+				background-color: rgb(3, 136, 3);
+			}
+		}
+
+		.teamMembersSec {
+			flex-wrap: wrap;
+			justify-content: center;
+
+			.memberDiv {
+				width: 26%;
+				background-color: white;
+				margin: 0.5rem;
+				color: $the-dark-grey;
+				padding: 0.3rem 0.7rem;
+				border-radius: 8px;
+				text-align: center;
+
+				.kick {
+					padding: 0 0.4rem;
+					font-weight: 600;
+				}
+			}
+		}
+
+
+		.deleteTeam {
+			background-color: $the-main-red;
+			color: white;
+			font-weight: 800;
+
+			&:hover {
+				background-color: rgb(201, 2, 2);
+			}
+		}
+
+	}
+}

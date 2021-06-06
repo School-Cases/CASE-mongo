@@ -1,15 +1,41 @@
-<nav>
-    <a href="/createteam">create team</a>
-    <a href="/logout">logout</a>
-    <a href="/teams">join team</a>
-    <a href="/dashboard/<%= user._id %>">dashboard</a>
-</nav>
-<h2>join team: <%= user.name %> </h2>
+<section class="joinTeamContent">
+    <header class="flex">
+        <h1 class="yourTeams">TEAMS</h1>
 
-<% let sortedTeamsByName = teamList.sort((a, b) => a.name.localeCompare(b.name)) %>
+        <section class="flex navUser">
+            <div class="username"><a style="color: white"
+                    href="/dashboard/<%= user._id %>"><%= user.name.toUpperCase() %></a></div>
+            <div class="navUserLogSet"><a style="color: #7e7e7e;" href="/logout">LOGOUT</a></div>
+            <div style="color: #7e7e7e; padding-bottom: 1px;">|</div>
+            <div class="navUserLogSet"><a style="color: #7e7e7e;" href="/update/<%= user._id %>">SETTINGS</a></div>
+        </section>
+    </header>
 
-<a href="/dashboard/<%= user._id %>"><div>BACK</div></a>
+    <a href="/dashboard/<%= user._id %>">
+        <svg xmlns="http://www.w3.org/2000/svg" width="6%" height="6%" fill="" class="bi bi-arrow-left back"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+        </svg>
+    </a>
 
-<% sortedTeamsByName.forEach(team => { %>
-    <div><%= team.name %><a href="/jointeam/<%= team.id %> ">JOIN</a> </div>
-<% }); %> 
+    <h1 class="center joinTitle">Join a team!</h1>
+
+    <section class="teamSection center flex">
+
+        <% let sortedTeamsByName = teamList.sort((a, b) => a.name.localeCompare(b.name)) %>
+
+        <% sortedTeamsByName.forEach(team => { %>
+        <div class="teamDiv">
+            <div class="teamName"><%= team.name %></div>
+            <a class="" href="/jointeam/<%= team.id %> ">JOIN</a>
+        </div>
+        <% }); %>
+
+    </section>
+
+
+
+</section>
+
+<!-- <h2>join team: <%= user.name %> </h2> -->

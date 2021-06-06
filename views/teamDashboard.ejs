@@ -17,6 +17,14 @@
         </section>
     </header>
 
+    <a href="/dashboard/<%= user._id %>">
+        <svg xmlns="http://www.w3.org/2000/svg" width="6%" height="6%" fill="" class="bi bi-arrow-left back"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+        </svg>
+    </a>
+
     <section class="row">
         <section class="col teamNews">
 
@@ -30,15 +38,27 @@
             </div>
 
             <% if (user._id == team.admin) { %>
-            <form class="hidden" id="createNews" action="/createteamnews" method="post">
-                <div>
-                    <input type="hidden" name="teamref" value="<%= team._id %>">
-                    title: <input type="text" name="title" id="title">
+            <form class="center hidden" id="createNews" action="/createteamnews" method="post">
+                <div class="close">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-x-lg" viewBox="0 0 16 16">
+                        <path
+                            d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414 1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z" />
+                    </svg>
                 </div>
-                <textarea name="text" placeholder="text" id="text" cols="30" rows="10"></textarea>
-                <div>
-                    important: <input type="checkbox" name="important" id="important">
-                    <input type="submit" id="createNewsSubmit" value="add news">
+                <div class="center mb-3">
+                    <input type="hidden" name="teamref" value="<%= team._id %>">
+                    <div class="center">TITLE:</div>
+                    <input type="text" name="title" id="title">
+                </div>
+                <div class="center">
+                    <textarea class="center" name="text" placeholder="Sån text under rubrik" id="text" cols="40" rows="10"></textarea>
+                </div>
+                <div class="center">
+                    IMPORTANT:<input style="margin-left:4px;" type="checkbox" name="important" id="important">
+                </div>
+                <div class="center mt-3 mb-2">
+                    <input class="btn btn-outline-success addNewsButton" type="submit" id="createNewsSubmit" value="ADD">
                 </div>
             </form>
             <% } %>
@@ -47,7 +67,20 @@
             <% team.news.forEach(news => { %>
             <section class="oneNews">
                 <div class="flex">
-                    <h4><%= news.title %></h4>
+                    <div class="flex iconRubbe">
+                        <% if (news.important === true) { %>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                            class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+                            <path
+                                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                        </svg>
+                        <% } %>
+
+
+                        <h4><%= news.title %></h4>
+                    </div>
+
+                    <% if (user._id == team.admin) { %>
                     <a href="/deletenews/<%= news._id %>"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
                             fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                             <path
@@ -55,13 +88,13 @@
                             <path fill-rule="evenodd"
                                 d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
                         </svg></a>
+                    <% } %>
                 </div>
                 <p><%= news.text %></p>
                 <% if (user._id == team.admin) { %>
 
                 <% } %>
                 <hr>
-                <% console.log(news.important); %>
             </section>
             <% }); %>
 
@@ -104,6 +137,11 @@
         addButton.classList.add("hidden");
 
         document.getElementById("createNewsSubmit").addEventListener("click", () => {
+            addButton.classList.remove("hidden");
+        })
+
+        document.querySelector(".close").addEventListener("click", (el) => {
+            document.getElementById("createNews").classList.add("hidden");
             addButton.classList.remove("hidden");
         })
     })

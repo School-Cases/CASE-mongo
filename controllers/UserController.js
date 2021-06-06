@@ -19,13 +19,13 @@ const getAllUsers = async (req, res) => {
 }
 
 const userDashboard = async (req, res) => {
-    // const user = await Users.findOne({_id: req.params.id});
+    const user = await Users.findOne({_id: req.params.id});
     const teams = await Team.find({
         members: req.params.id
     });
     // const list = await Nyhet.find({category: "VILL!!"}).exec();
     res.render('userDashboard', {
-        user: req.session.user,
+        user: user,
         teams: teams,
     });
 }
@@ -139,12 +139,13 @@ const updateUserView = async (req, res) => {
 
 const updateUserById = async (req, res) => {
     const id = req.params.id;
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    // const salt = await bcrypt.genSalt(10);
+    // const hashedPassword = await bcrypt.hash(req.body.password, salt);
     let user = await Users.findByIdAndUpdate(id, {
         name: req.body.name,
-        password: hashedPassword,
+        // password: hashedPassword,
     });
+    user.save();
     res.redirect('/dashboard/' + user._id);
 }
 
