@@ -2,6 +2,9 @@
 (school case)
 
 ---
+Uppgift:
+* Make an app that uses MongoDB.
+
 Krav:
 * Appen ska använda MongoDB och Node.
 * Appen ska ha CRUD-funktioner.
