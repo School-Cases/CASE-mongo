@@ -11,4 +11,4 @@ Krav:
 * En användare ska endast ha tillgång till sina egna resurser (om inte inbjuden).
 * Minst två collection i databasen.
 ---
-Note: My first project using a database. In this case MongoDB
+Note: My first project using a database. In this case MongoDB.
